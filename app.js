@@ -1,6 +1,6 @@
 const KEY="rivera73";
 
-let data=JSON.parse(localStorage.getItem(KEY))||{
+let data=JSON.parse(localStorage.getItem(KEY)) || {
   peso:79,
   xp:0,
   racha:0,
@@ -10,6 +10,10 @@ let data=JSON.parse(localStorage.getItem(KEY))||{
 
 if(!data.misiones) data.misiones={};
 
+function guardarDatos(){
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+
 function nivel(){
   if(data.peso<=73)return["Leyenda","🐺✨"];
   if(data.peso<=75)return["Élite","🐺⚡"];
@@ -17,11 +21,8 @@ function nivel(){
   return["Recluta","🐺"];
 }
 
-function guardar(){
-  localStorage.setItem(KEY,JSON.stringify(data));
-}
-
 function render(){
+
   document.getElementById("peso").innerText=data.peso.toFixed(1);
 
   let p=((79-data.peso)/6)*100;
@@ -33,11 +34,12 @@ function render(){
   document.getElementById("racha").innerText=data.racha;
 
   const n=nivel();
+
   document.getElementById("nivel").innerText=n[0];
   document.getElementById("wolf").innerText=n[1];
 
   document.querySelectorAll(".m").forEach((c,i)=>{
-    c.checked=!!data.misiones[i];
+    c.checked = data.misiones[i] === true;
   });
 
   const h=document.getElementById("historial");
@@ -48,30 +50,36 @@ function render(){
     d.innerHTML=`<span>${i.fecha}</span><b>${i.peso} kg</b>`;
     h.appendChild(d);
   });
-
-  guardar();
 }
 
-document.querySelectorAll(".m").forEach((c,i)=>{
-  c.addEventListener("change",()=>{
-    const v=Number(c.dataset.xp);
+document.getElementById("guardarMisiones").onclick=()=>{
+
+  let nuevoXP=0;
+  let completadas=0;
+
+  document.querySelectorAll(".m").forEach((c,i)=>{
+
+    data.misiones[i]=c.checked;
 
     if(c.checked){
-      data.misiones[i]=true;
-      data.xp+=v;
-      data.racha++;
-    }else{
-      data.misiones[i]=false;
-      data.xp=Math.max(0,data.xp-v);
-      data.racha=Math.max(0,data.racha-1);
+      nuevoXP+=Number(c.dataset.xp);
+      completadas++;
     }
 
-    guardar();
-    render();
   });
-});
+
+  data.xp=nuevoXP;
+  data.racha=completadas;
+
+  guardarDatos();
+
+  document.getElementById("mensajeMisiones").innerText="✅ Misiones guardadas";
+
+  render();
+};
 
 document.getElementById("guardar").onclick=()=>{
+
   const p=parseFloat(document.getElementById("nuevoPeso").value);
 
   if(isNaN(p))return;
@@ -84,7 +92,8 @@ document.getElementById("guardar").onclick=()=>{
   });
 
   document.getElementById("nuevoPeso").value="";
-  guardar();
+
+  guardarDatos();
   render();
 };
 
