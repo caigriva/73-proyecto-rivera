@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050811">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+<title>73 · Proyecto Rivera</title>
+</head>
+<body>
+<div class="app">
+  <div class="card">
+    <div id="wolf" class="wolf">🐺</div>
+    <h1>Operación 73</h1>
+    <p>Carlos Rivera</p>
+    <div class="peso"><span id="peso">79.0</span><small>kg</small></div>
+    <div class="barra"><div id="fill"></div></div>
+    <div id="progreso">0%</div>
+    <div class="stats">
+      <div><b id="xp">0</b><span>XP</span></div>
+      <div><b id="racha">0</b><span>Racha</span></div>
+      <div><b id="nivel">Recluta</b><span>Nivel</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Misiones</h2>
+    <label><input class="m" data-xp="10" type="checkbox"> Agua</label>
+    <label><input class="m" data-xp="10" type="checkbox"> Comer bien</label>
+    <label><input class="m" data-xp="20" type="checkbox"> Correr 40 min</label>
+    <label><input class="m" data-xp="15" type="checkbox"> Fuerza</label>
+    <label><input class="m" data-xp="10" type="checkbox"> Dormir 7h</label>
+  </div>
+
+  <div class="card">
+    <h2>Peso</h2>
+    <input id="nuevoPeso" type="number" step="0.1" placeholder="78.4">
+    <button id="guardar">Guardar</button>
+    <div id="historial"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");
+</script>
+</body>
+</html>
