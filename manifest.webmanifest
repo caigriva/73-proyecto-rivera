@@ -1,0 +1,9 @@
+{
+  "name":"73 · Proyecto Rivera",
+  "short_name":"Proyecto73",
+  "display":"standalone",
+  "start_url":"./",
+  "background_color":"#050811",
+  "theme_color":"#050811",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml"}]
+}
